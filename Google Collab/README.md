@@ -1,19 +1,19 @@
-# TikTok Video Downloader
+# TT Video Downloader
 
-This project provides a Python script to download TikTok videos using a command-line interface. It works both in Google Colab and on local machines.
+This project provides a Python script to download TT videos using a command-line interface. It works both in Google Colab and on local machines.
 
 ## Features
 
-- Download TikTok videos by providing the video URL
-- Automatically generate a default filename based on the TikTok username
+- Download TT videos by providing the video URL
+- Automatically generate a default filename based on the TT username
 - Ensure the output file always has a .mp4 extension
-- Normalize TikTok URLs for consistent processing
+- Normalize TT URLs for consistent processing
 
 ## Dependencies
 
 This project relies on the following Python libraries:
 
-- `yt-dlp`: For downloading videos from TikTok and other platforms
+- `yt-dlp`: For downloading videos from TT and other platforms
 - `google.colab` (only for Google Colab usage): For file downloads in the Colab environment
 
 ## Installation and Usage
@@ -30,7 +30,7 @@ This project relies on the following Python libraries:
 
 3. In a new code cell, copy and paste the entire script provided in the project.
 
-4. Run the cell. You will be prompted to enter a TikTok video URL and an optional custom filename.
+4. Run the cell. You will be prompted to enter a TT video URL and an optional custom filename.
 
 5. The video will be downloaded and automatically saved to your local machine.
 
@@ -44,7 +44,7 @@ This project relies on the following Python libraries:
    pip install yt-dlp
    ```
 
-3. Save the script as `tiktok_downloader.py` (or any preferred name) on your local machine.
+3. Save the script as `TT_downloader.py` (or any preferred name) on your local machine.
 
 4. Remove or comment out the following line from the script, as it's only needed for Google Colab:
 
@@ -52,7 +52,7 @@ This project relies on the following Python libraries:
    # from google.colab import files
    ```
 
-5. Also, remove or comment out this line inside the `download_tiktok_video` function:
+5. Also, remove or comment out this line inside the `download_TT_video` function:
 
    ```python
    # files.download(output_path)
@@ -61,22 +61,22 @@ This project relies on the following Python libraries:
 6. Run the script using Python:
 
    ```
-   python tiktok_downloader.py
+   python TT_downloader.py
    ```
 
-7. Follow the prompts to enter the TikTok video URL and optional custom filename.
+7. Follow the prompts to enter the TT video URL and optional custom filename.
 
 8. The video will be downloaded to the same directory as the script.
 
 ## Usage Notes
 
 - The script will automatically format the URL to start with 'https://www.' for consistency.
-- If you don't provide a custom filename, it will use the TikTok username as the default filename.
+- If you don't provide a custom filename, it will use the TT username as the default filename.
 - The script ensures that all output filenames end with '.mp4'.
 
 ## Legal Disclaimer
 
-This tool is for educational purposes only. Ensure you have the right to download and use videos as per TikTok's terms of service and applicable copyright laws.
+This tool is for educational purposes only. Ensure you have the right to download and use videos as per TT's terms of service and applicable copyright laws.
 
 ## Troubleshooting
 
@@ -84,7 +84,7 @@ If you encounter any issues:
 
 1. Ensure you have the latest version of `yt-dlp` installed.
 2. Check your internet connection.
-3. Verify that the TikTok video URL is correct and the video is publicly accessible.
+3. Verify that the TT video URL is correct and the video is publicly accessible.
 4. If using Google Colab, make sure you're using an up-to-date version of Colab.
 
 For any persistent issues, please open an issue in the project repository.
