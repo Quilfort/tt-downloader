@@ -1,8 +1,10 @@
 import os
-import time
-from urllib.parse import urlparse
-import yt_dlp
 import requests
+import sys
+import time
+import yt_dlp
+
+from urllib.parse import urlparse
 
 def expand_url(url):
     try:
@@ -11,7 +13,7 @@ def expand_url(url):
     except requests.RequestException:
         return url
 
-def download_tiktok_video(url, output_path):
+def download_tt_video(url, output_path):
     try:
         ydl_opts = {
             'outtmpl': output_path,
@@ -52,7 +54,11 @@ def normalize_url(url):
     return url
 
 def main():
-    url = input("Enter the TikTok video URL: ")
+    if len(sys.argv) > 1:
+        url = sys.argv[1]
+    else:
+        url = input("Enter the TT video URL: ")
+    
     url = normalize_url(url)
     filename = get_default_filename(url)
 
@@ -62,9 +68,9 @@ def main():
     # Validate URL
     parsed_url = urlparse(url)
     if not (parsed_url.scheme and parsed_url.netloc):
-        print("Error: Invalid URL. Please provide a valid TikTok video URL.")
+        print("Error: Invalid URL. Please provide a valid TT video URL.")
     else:
-        download_tiktok_video(url, output_path)
+        download_tt_video(url, output_path)
 
 if __name__ == "__main__":
     main()

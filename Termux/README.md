@@ -1,80 +1,89 @@
-# TikTok Video Downloader for Android (Termux)
+# TT Video Downloader for Android (Termux)
 
-This project provides a lightweight Python script to download TikTok videos using Termux on Android devices.
+This project provides a lightweight Python script to download TT videos using Termux on Android devices.
 
 ## Features
 
-- Download TikTok videos by providing the video URL
-- Automatically generate a default filename based on the TikTok username
-- Ensure the output file always has a .mp4 extension
-- Normalize TikTok URLs for consistent processing
+- Download TT videos by providing the video URL (supports various TT URL formats)
+- Accept URL as a command-line argument or via user input
+- Automatically generate a filename based on the TT username and video ID
+- Normalize and expand TT URLs for consistent processing
+- Handle short mobile links (vm.tiktok.com) and web links
 - Save videos directly to the Downloads folder on your Android device
+- Set the correct date and time for downloaded files
 
 ## Dependencies
 
-This project relies on the following Python library:
+This project relies on the following Python libraries:
 
-- `yt-dlp`: For downloading videos from TikTok and other platforms
+- `yt-dlp`: For downloading videos from TT and other platforms
+- `requests`: For handling URL redirects and expansions
 
 ## Installation and Usage on Android with Termux
 
-1. Open Termux and update the package list:
-   ```
-   pkg update
-   ```
 
-2. Install Python and the required tools:
+1. Install Python and the required tools:
    ```
    pkg install python
    pkg install git
    ```
 
-3. Install yt-dlp:
+2. Install the required Python libraries:
    ```
-   pip install yt-dlp
+   pip install yt-dlp requests
    ```
 
-4. Clone this repository (or download the script):
+3. Clone this repository (or download the script):
    ```
    git clone git@github.com:Quilfort/tt-downloader.git
-   cd tt-downloader/Termux
+   cd tt-downloader
    ```
 
-6. Give Termux access to your storage:
+4. Give Termux access to your storage:
    ```
    termux-setup-storage
    ```
 
-7. Run the script:
-   ```
-   python tt_downloader.py
-   ```
+5. Run the script in one of two ways:
 
-8. Follow the prompts to enter the TikTok video URL and optional custom filename.
+   a. With a URL as a command-line argument:
+      ```
+      python tt_downloader.py https://vm.tiktok.com/...
+      ```
 
-9. The video will be downloaded to your Android device's Downloads folder.
+   b. Without an argument (you'll be prompted to enter the URL):
+      ```
+      python tt_downloader.py
+      ```
+
+6. The script supports various TT URL formats, including:
+   - Short mobile links (e.g., https://vm.tiktok.com/...)
+   - Web links (e.g., https://www.tiktok.com/@username/video/...)
+   - Mobile app links (e.g., https://www.tiktok.com/t/...)
+
+7. The video will be downloaded to your Android device's Downloads folder with a filename based on the TT username and video ID.
 
 ## Usage Notes
 
-- The script will automatically format the URL to start with 'https://www.' for consistency.
-- If you don't provide a custom filename, it will use the TikTok username as the default filename.
-- The script ensures that all output filenames end with '.mp4'.
+- The script will automatically handle different TT URL formats, including short links and links with additional parameters.
+- The filename will be based on the TT username and video ID, ending with '.mp4'.
 - Downloaded videos are saved in the Downloads folder of your Android device.
+- The file's date and time will be set to the current date and time when it's downloaded.
 
 ## Legal Disclaimer
 
-This tool is for educational purposes only. Ensure you have the right to download and use videos as per TikTok's terms of service and applicable copyright laws.
+This tool is for educational purposes only. Ensure you have the right to download and use videos as per TT's terms of service and applicable copyright laws.
 
 ## Troubleshooting
 
 If you encounter any issues:
 
-1. Ensure you have the latest version of `yt-dlp` installed:
+1. Ensure you have the latest versions of the required libraries installed:
    ```
-   pip install -U yt-dlp
+   pip install -U yt-dlp requests
    ```
 2. Check your internet connection.
-3. Verify that the TikTok video URL is correct and the video is publicly accessible.
+3. Verify that the TT video URL is correct and the video is publicly accessible.
 4. Make sure Termux has permission to access your storage.
 
 For any persistent issues, please open an issue in the project repository.
