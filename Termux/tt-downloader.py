@@ -1,7 +1,15 @@
 import os
 import time
-import yt_dlp
 from urllib.parse import urlparse
+import yt_dlp
+import requests
+
+def expand_url(url):
+    try:
+        response = requests.head(url, allow_redirects=True)
+        return response.url
+    except requests.RequestException:
+        return url
 
 def download_tiktok_video(url, output_path):
     try:
@@ -26,10 +34,17 @@ def get_default_filename(url):
     parsed_url = urlparse(url)
     path_parts = parsed_url.path.split('/')
     if len(path_parts) > 1:
-        return path_parts[1].strip('@') + '.mp4'
+        username = path_parts[1].strip('@')
+        return f"{username}_{path_parts[-1]}.mp4"
     return 'video.mp4'
 
 def normalize_url(url):
+    # Expand short URLs
+    url = expand_url(url)
+    
+    # Remove query parameters
+    url = url.split('?')[0]
+    
     if not url.startswith('http'):
         url = 'https://' + url
     if not url.startswith('https://www.'):
