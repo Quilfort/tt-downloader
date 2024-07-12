@@ -1,5 +1,3 @@
 # tt-downloader
 
-````python
-!pip install -U yt-dlp
-````
+Project for Downloading TT in Termux on Android
