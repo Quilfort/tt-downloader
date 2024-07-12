@@ -1,5 +1,4 @@
 import os
-import time
 import yt_dlp
 from urllib.parse import urlparse
 
@@ -13,10 +12,6 @@ def download_tiktok_video(url, output_path):
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([url])
         
-        # Set the file's modification time to the current time
-        current_time = time.time()
-        os.utime(output_path, (current_time, current_time))
-        
         print(f"Video downloaded successfully: {output_path}")
 
     except Exception as e:
@@ -29,6 +24,11 @@ def get_default_filename(url):
         return path_parts[1].strip('@') + '.mp4'
     return 'video.mp4'
 
+def ensure_mp4_extension(filename):
+    if not filename.lower().endswith('.mp4'):
+        return filename + '.mp4'
+    return filename
+
 def normalize_url(url):
     if not url.startswith('http'):
         url = 'https://' + url
@@ -39,10 +39,12 @@ def normalize_url(url):
 def main():
     url = input("Enter the TikTok video URL: ")
     url = normalize_url(url)
-    filename = get_default_filename(url)
+    default_filename = get_default_filename(url)
+    output = input(f"Enter the output file name (default: {default_filename}): ") or default_filename
+    output = ensure_mp4_extension(output)
 
     # Use the downloads directory in the user's home folder
-    output_path = os.path.expanduser(f"~/storage/downloads/{filename}")
+    output_path = os.path.expanduser(f"~/storage/downloads/{output}")
 
     # Validate URL
     parsed_url = urlparse(url)
