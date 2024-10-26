@@ -3,7 +3,9 @@ import requests
 import sys
 import time
 import yt_dlp
-from urllib.parse import urlparse, parse_qs
+import random
+import string
+from urllib.parse import urlparse
 
 def expand_url(url):
     try:
@@ -30,18 +32,31 @@ def download_video(url, output_path):
     except Exception as e:
         print(f"Error downloading video: {str(e)}")
 
+def generate_unique_filename(base_path):
+    """Generates a unique filename by appending a random string if the file exists."""
+    if not os.path.exists(base_path):
+        return base_path
+
+    filename, extension = os.path.splitext(base_path)
+    random_string = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+    unique_filename = f"{filename}_{random_string}{extension}"
+    return unique_filename
+
 def get_default_filename(url):
     parsed_url = urlparse(url)
     path_parts = parsed_url.path.split('/')
     
     if 'youtube.com' in parsed_url.netloc or 'youtu.be' in parsed_url.netloc:
-        return "Youtube_video.mp4"
+        filename = "Youtube_video.mp4"
+    else:
+        if len(path_parts) > 1:
+            username = path_parts[1].strip('@')
+            filename = f"{username}_{path_parts[-1]}.mp4"
+        else:
+            filename = 'video.mp4'
     
-    if len(path_parts) > 1:
-        username = path_parts[1].strip('@')
-        return f"{username}_{path_parts[-1]}.mp4"
-    
-    return 'video.mp4'
+    downloads_dir = os.path.expanduser("~/storage/downloads")
+    return generate_unique_filename(os.path.join(downloads_dir, filename))
 
 def normalize_url(url):
     url = expand_url(url)
@@ -60,8 +75,7 @@ def main():
         url = input("Enter the video URL: ")
     
     url = normalize_url(url)
-    filename = get_default_filename(url)
-    output_path = os.path.expanduser(f"~/storage/downloads/{filename}")
+    output_path = get_default_filename(url)
 
     parsed_url = urlparse(url)
     if not (parsed_url.scheme and parsed_url.netloc):
