@@ -79,9 +79,9 @@ This tool is for educational purposes only. Ensure you have the right to downloa
 If you encounter any issues:
 
 1. Ensure you have the latest versions of the required libraries installed:
-   ```
-   pip install -U yt-dlp requests
-   ```
+```bash
+pip install -U yt-dlp requests
+```
 2. Check your internet connection.
 3. Verify that the TT video URL is correct and the video is publicly accessible.
 4. Make sure Termux has permission to access your storage.

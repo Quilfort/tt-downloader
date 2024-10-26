@@ -1,5 +1,4 @@
-
-# TT Downloader for Termux
+# TT Downloader for Android and Termux
 
 This guide explains how to set up Termux to automatically download TT videos when you share a TT URL to Termux.
 
@@ -24,11 +23,11 @@ This guide explains how to set up Termux to automatically download TT videos whe
 
    In the nano editor, add the following content:
 
-   When location is `/data/data/com.termux/files/home/tt-downloader/Termux/tt-downloader.py` your script will be: 
+   When location is `/data/data/com.termux/files/home/tt-downloader/Termux/tt-downloader.py` your script will be:
 
    ```bash
    #!/data/data/com.termux/files/usr/bin/bash
-   
+
    python /data/data/com.termux/files/home/tt-downloader/Termux/tt-downloader.py "$1"
    ```
 
@@ -38,7 +37,7 @@ This guide explains how to set up Termux to automatically download TT videos whe
 
 4. **Make the script executable | Optional**
 
-    You may need to make the termux-url-opener executable, depending on how you set up your Termux.
+   You may need to make the termux-url-opener executable, depending on how you set up your Termux.
 
    Run the following command:
 
@@ -63,9 +62,15 @@ After completing the setup:
 
 ## Troubleshooting
 
+- Ensure that `yt-dlp` is up-to-date. If not, it's possible it won't download or just download a small file
+```bash
+# Inside Termux
+pip install -U yt-dlp
+```
 - Ensure your Python script (`tt-downloader.py`) is working correctly and can handle URLs passed as command-line arguments.
 - Check that the paths in the `termux-url-opener` script are correct, especially if you've moved your Python script.
 - If you encounter issues, you may want to add error handling or output messages in the bash script for better feedback.
+
 
 ## Coming Soon
 
