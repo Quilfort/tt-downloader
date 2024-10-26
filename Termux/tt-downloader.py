@@ -3,8 +3,7 @@ import requests
 import sys
 import time
 import yt_dlp
-
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
 
 def expand_url(url):
     try:
@@ -13,7 +12,7 @@ def expand_url(url):
     except requests.RequestException:
         return url
 
-def download_tt_video(url, output_path):
+def download_video(url, output_path):
     try:
         ydl_opts = {
             'outtmpl': output_path,
@@ -23,7 +22,6 @@ def download_tt_video(url, output_path):
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([url])
         
-        # Set the file's modification time to the current time
         current_time = time.time()
         os.utime(output_path, (current_time, current_time))
         
@@ -35,42 +33,41 @@ def download_tt_video(url, output_path):
 def get_default_filename(url):
     parsed_url = urlparse(url)
     path_parts = parsed_url.path.split('/')
+    
+    if 'youtube.com' in parsed_url.netloc or 'youtu.be' in parsed_url.netloc:
+        return "Youtube_video.mp4"
+    
     if len(path_parts) > 1:
         username = path_parts[1].strip('@')
         return f"{username}_{path_parts[-1]}.mp4"
+    
     return 'video.mp4'
 
 def normalize_url(url):
-    # Expand short URLs
     url = expand_url(url)
+    parsed_url = urlparse(url)
     
-    # Remove query parameters
-    url = url.split('?')[0]
+    if 'youtube.com' in parsed_url.netloc or 'youtu.be' in parsed_url.netloc:
+        return url  # Preserve the entire URL for YouTube
     
-    if not url.startswith('http'):
-        url = 'https://' + url
-    if not url.startswith('https://www.'):
-        url = url.replace('https://', 'https://www.')
-    return url
+    # Remove query parameters for non-YouTube URLs
+    return url.split('?')[0]
 
 def main():
     if len(sys.argv) > 1:
         url = sys.argv[1]
     else:
-        url = input("Enter the TT video URL: ")
+        url = input("Enter the video URL: ")
     
     url = normalize_url(url)
     filename = get_default_filename(url)
-
-    # Use the downloads directory in the user's home folder
     output_path = os.path.expanduser(f"~/storage/downloads/{filename}")
 
-    # Validate URL
     parsed_url = urlparse(url)
     if not (parsed_url.scheme and parsed_url.netloc):
-        print("Error: Invalid URL. Please provide a valid TT video URL.")
+        print("Error: Invalid URL. Please provide a valid video URL.")
     else:
-        download_tt_video(url, output_path)
+        download_video(url, output_path)
 
 if __name__ == "__main__":
     main()
